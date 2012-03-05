@@ -18,7 +18,7 @@ end
 
 def add(file, ip)
   list = read(file)
-  write(file, list << ip)
+  write(file, (list << ip).uniq)
 end
 
 def remove(file, ip)
