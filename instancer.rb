@@ -30,16 +30,34 @@ get /.*favicon.*/ do
   ""
 end
 
-get /\/(.*)/ do |type|
+get /\/(\w+)/ do |type|
   read(type + DATA_FILE_SUFIX).join(",")
 end
 
-post /\/(.*)/ do |type|
+post /\/(\w+)/ do |type|
   add(type + DATA_FILE_SUFIX, params[:ip])
   ""
 end
 
-delete /\/(.*)/ do |type|
+delete /\/(\w+)/ do |type|
   remove(type + DATA_FILE_SUFIX, params[:ip])
   ""
+end
+
+DB_PREFIX='db'
+APP_PREFIX='app'
+
+get '/' do 
+    puts "db servers :", read(DB_PREFIX+DATA_FILE_SUFIX)
+    puts "app servers:", read(APP_PREFIX+DATA_FILE_SUFIX)
+   #"Welcome to "
+   @instances = {
+        'oracle_db'=>"192.168.56.2", 
+        'app_honnix'=>"192.168.56.3", 
+        'app_larry'=>"192.168.56.4",
+        'app_liren'=>"192.168.56.5",
+        'ha_proxy'=>"192.168.56.6"
+        
+   }
+   erb :index
 end
